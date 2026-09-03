@@ -1,0 +1,486 @@
+/*
+ * Shared presentational styles for the internal tools prototype.
+ * Only Fluent UI v9 design tokens (exposed as CSS variables by FluentProvider)
+ * are used, so these styles follow light/dark theme switches automatically.
+ * Import once, near the app root: `import './shared/shared.css'`
+ */
+
+/* ---------------------------------------------------------------- layout ---*/
+
+.app-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.app-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.app-row--end {
+  justify-content: flex-end;
+}
+
+.app-grow {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.app-truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.app-mono {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 12px;
+  letter-spacing: -0.01em;
+}
+
+.app-muted {
+  color: var(--colorNeutralForeground3);
+}
+
+/* Responsive metric grid used by every page's summary strip. */
+.app-metric-grid {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+}
+
+/* Desktop two-column shell: list on the left, detail pane on the right. */
+.app-split {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: minmax(0, 1.65fr) minmax(320px, 1fr);
+  align-items: start;
+}
+
+@media (max-width: 1180px) {
+  .app-split {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* --------------------------------------------------------- page header ----*/
+
+.app-page-header {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--colorNeutralStroke2);
+}
+
+.app-page-header--bare {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.app-page-header__row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.app-page-header__text {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.app-page-header__title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.app-page-header__title h1 {
+  margin: 0;
+  line-height: 1.2;
+}
+
+.app-page-header__subtitle {
+  margin: 0;
+  max-width: 78ch;
+  color: var(--colorNeutralForeground3);
+}
+
+.app-page-header__actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.app-page-header__meta {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin: 2px 0 0;
+}
+
+.app-page-header__meta-item {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+}
+
+.app-page-header__meta-label {
+  color: var(--colorNeutralForeground3);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-size: 10px;
+}
+
+.app-page-header__meta-value {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--colorNeutralForeground1);
+}
+
+.app-page-header__toolbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  padding-top: 4px;
+}
+
+/* --------------------------------------------------------- metric card ----*/
+
+.app-metric {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px 14px;
+  text-align: left;
+  border: 1px solid var(--colorNeutralStroke2);
+  border-radius: var(--borderRadiusMedium);
+  background: var(--colorNeutralBackground1);
+  box-shadow: var(--shadow2);
+  overflow: hidden;
+  font: inherit;
+  color: inherit;
+}
+
+.app-metric::before {
+  content: '';
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 3px;
+  background: var(--colorNeutralStroke1);
+}
+
+.app-metric--success::before {
+  background: var(--colorPaletteGreenBorderActive);
+}
+.app-metric--warning::before {
+  background: var(--colorPaletteDarkOrangeBorderActive);
+}
+.app-metric--error::before {
+  background: var(--colorPaletteRedBorderActive);
+}
+.app-metric--info::before {
+  background: var(--colorBrandStroke1);
+}
+
+.app-metric--interactive {
+  cursor: pointer;
+  transition:
+    box-shadow 120ms ease,
+    transform 120ms ease;
+}
+
+.app-metric--interactive:hover {
+  box-shadow: var(--shadow8);
+  background: var(--colorNeutralBackground1Hover);
+}
+
+.app-metric--interactive:active {
+  transform: translateY(1px);
+}
+
+.app-metric--interactive:focus-visible {
+  outline: 2px solid var(--colorStrokeFocus2);
+  outline-offset: 1px;
+}
+
+.app-metric--selected {
+  border-color: var(--colorBrandStroke1);
+  background: var(--colorBrandBackground2);
+}
+
+.app-metric__top {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.app-metric__icon {
+  display: inline-flex;
+  color: var(--colorNeutralForeground3);
+}
+
+.app-metric__label {
+  color: var(--colorNeutralForeground3);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-size: 10.5px;
+}
+
+.app-metric__value-row {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.app-metric__value {
+  line-height: 1.1;
+}
+
+.app-metric__delta {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  color: var(--colorNeutralForeground3);
+}
+
+.app-metric__delta--good {
+  color: var(--colorPaletteGreenForeground1);
+}
+
+.app-metric__delta--bad {
+  color: var(--colorPaletteRedForeground1);
+}
+
+.app-metric__hint {
+  color: var(--colorNeutralForeground3);
+}
+
+.app-metric__footer {
+  margin-top: 2px;
+  margin-left: -8px;
+}
+
+/* -------------------------------------------------------- status badge ----*/
+
+.app-status-badge {
+  max-width: 100%;
+  white-space: nowrap;
+}
+
+/* ---------------------------------------------------------- empty state ---*/
+
+.app-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  text-align: center;
+  color: var(--colorNeutralForeground2);
+}
+
+.app-empty--panel {
+  padding: 40px 24px;
+  border: 1px dashed var(--colorNeutralStroke2);
+  border-radius: var(--borderRadiusMedium);
+  background: var(--colorNeutralBackground2);
+}
+
+.app-empty--inline {
+  padding: 18px 12px;
+}
+
+.app-empty__icon {
+  display: inline-flex;
+  color: var(--colorNeutralForeground3);
+}
+
+.app-empty__title {
+  margin: 0;
+}
+
+.app-empty__description {
+  max-width: 52ch;
+  color: var(--colorNeutralForeground3);
+}
+
+.app-empty__extra {
+  padding-top: 2px;
+}
+
+.app-empty__actions {
+  display: flex;
+  gap: 8px;
+  padding-top: 6px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* ------------------------------------------------------------ timeline ----*/
+
+.app-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.app-timeline__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-timeline__item {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 10px;
+  padding-bottom: 12px;
+}
+
+.app-timeline--dense .app-timeline__item {
+  padding-bottom: 8px;
+}
+
+.app-timeline__item:last-child {
+  padding-bottom: 0;
+}
+
+.app-timeline__item:last-child .app-timeline__line {
+  display: none;
+}
+
+.app-timeline__rail {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.app-timeline__line {
+  flex: 1 1 auto;
+  width: 1px;
+  min-height: 12px;
+  background: var(--colorNeutralStroke2);
+}
+
+.app-timeline__body {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+}
+
+.app-timeline__head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.app-timeline__time {
+  color: var(--colorNeutralForeground3);
+}
+
+.app-timeline__time:focus-visible {
+  outline: 2px solid var(--colorStrokeFocus2);
+  outline-offset: 1px;
+  border-radius: var(--borderRadiusSmall);
+}
+
+.app-timeline__action {
+  margin-left: auto;
+}
+
+.app-timeline__detail {
+  color: var(--colorNeutralForeground2);
+  overflow-wrap: anywhere;
+}
+
+.app-timeline__actor {
+  color: var(--colorNeutralForeground3);
+}
+
+/* ------------------------------------------------------ confirm dialog ----*/
+
+.app-confirm {
+  max-width: 520px;
+}
+
+.app-confirm__content {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.app-confirm__description {
+  margin: 0;
+  color: var(--colorNeutralForeground2);
+}
+
+.app-confirm__presets {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.app-confirm__preset-row {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.app-confirm__danger {
+  background: var(--colorPaletteRedBackground3);
+  border-color: var(--colorPaletteRedBorder2);
+  color: var(--colorNeutralForegroundOnBrand);
+}
+
+.app-confirm__danger:hover {
+  background: var(--colorPaletteRedForeground1);
+  border-color: var(--colorPaletteRedBorder2);
+  color: var(--colorNeutralForegroundOnBrand);
+}
+
+.app-confirm__danger:active {
+  background: var(--colorPaletteRedBackground3);
+  color: var(--colorNeutralForegroundOnBrand);
+}
+
+/* --------------------------------------------------------- misc helpers ---*/
+
+.app-card-section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 14px;
+  border: 1px solid var(--colorNeutralStroke2);
+  border-radius: var(--borderRadiusMedium);
+  background: var(--colorNeutralBackground1);
+}
+
+.app-scroll-y {
+  overflow-y: auto;
+  max-height: 420px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .app-metric--interactive {
+    transition: none;
+  }
+}
