@@ -63,13 +63,42 @@ const PrototypeContext = createContext<PrototypeContextValue | null>(null)
 
 const cloneInitialState = () => structuredClone(createInitialState())
 
+const isRecord = (value: unknown): value is Record<string, unknown> =>
+  typeof value === 'object' && value !== null && !Array.isArray(value)
+
+const hasCompatibleShape = (value: unknown, template: unknown): boolean => {
+  if (Array.isArray(template)) {
+    return (
+      Array.isArray(value) &&
+      (template.length === 0 ||
+        value.every((item) =>
+          template.some((example) => hasCompatibleShape(item, example)),
+        ))
+    )
+  }
+
+  if (isRecord(template)) {
+    if (!isRecord(value)) return false
+    return Object.entries(template).every(
+      ([key, example]) =>
+        key in value && hasCompatibleShape(value[key], example),
+    )
+  }
+
+  return template === null ? value === null : typeof value === typeof template
+}
+
 const loadState = (): DemoState => {
+  const initialState = cloneInitialState()
   const raw = window.localStorage.getItem(STORAGE_KEY)
-  if (!raw) return cloneInitialState()
+  if (!raw) return initialState
   try {
-    return JSON.parse(raw) as DemoState
+    const storedState: unknown = JSON.parse(raw)
+    return hasCompatibleShape(storedState, initialState)
+      ? (storedState as DemoState)
+      : initialState
   } catch {
-    return cloneInitialState()
+    return initialState
   }
 }
 

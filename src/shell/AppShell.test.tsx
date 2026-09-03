@@ -61,3 +61,12 @@ test('renders settings controls', () => {
   expect(screen.getByRole('switch', { name: 'Use dark theme' })).toBeTruthy()
   expect(screen.getByRole('button', { name: 'Reset demo data' })).toBeTruthy()
 })
+
+test('recovers when saved demo state has an incompatible shape', () => {
+  window.localStorage.setItem('internal-tools-hub:demo:v1', '{}')
+
+  renderShell(<HomePage />)
+
+  expect(screen.getByRole('heading', { level: 1 })).toBeTruthy()
+  expect(screen.getByText(/Demo environment/)).toBeTruthy()
+})
